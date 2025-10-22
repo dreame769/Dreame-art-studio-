@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dreame Art Studio | Kolawole Adedeji Israel - Gem-Embellished Art & Nature Paintings</title>
+    <title>Dreame Art Studio | Kolawole Adedeji Israel - Gem-Embellished Art Gallery</title>
     <style>
         * {
             margin: 0;
@@ -18,6 +18,7 @@
             --light: #f5f5f5;
             --white: #ffffff;
             --sold: #c41e3a;
+            --available: #2ecc71;
         }
 
         body {
@@ -30,11 +31,12 @@
         nav {
             position: fixed;
             width: 100%;
-            background: rgba(26, 26, 26, 0.95);
+            background: rgba(26, 26, 26, 0.98);
             backdrop-filter: blur(10px);
             z-index: 1000;
             padding: 1rem 5%;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
         }
 
         .nav-content {
@@ -54,7 +56,7 @@
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
@@ -62,8 +64,24 @@
             color: var(--white);
             text-decoration: none;
             font-size: 0.95rem;
-            transition: color 0.3s;
+            transition: all 0.3s;
             letter-spacing: 1px;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-links a:hover {
@@ -74,6 +92,7 @@
             display: none;
             flex-direction: column;
             cursor: pointer;
+            z-index: 1001;
         }
 
         .menu-toggle span {
@@ -86,35 +105,63 @@
 
         .hero {
             height: 100vh;
-            background: linear-gradient(135deg, rgba(26,26,26,0.9), rgba(139,115,85,0.8)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23d4af37" width="1200" height="800"/><path fill="%238b7355" d="M0 400L50 420L100 400L150 440L200 420L250 460L300 440L350 480L400 460L450 500L500 480L550 520L600 500L650 540L700 520L750 560L800 540L850 580L900 560L950 600L1000 580L1050 620L1100 600L1150 640L1200 620V800H0Z"/></svg>');
+            background: linear-gradient(135deg, rgba(26,26,26,0.95), rgba(139,115,85,0.85)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23d4af37;stop-opacity:1" /><stop offset="100%" style="stop-color:%238b7355;stop-opacity:1" /></linearGradient></defs><rect fill="url(%23grad1)" width="1200" height="800"/></svg>');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: var(--white);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '💎';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.05;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+
+        .hero-content {
+            z-index: 2;
         }
 
         .hero-content h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
             margin-bottom: 1rem;
             animation: fadeInUp 1s ease;
-            letter-spacing: 3px;
-        }
-
-        .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.3s backwards;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
 
         .hero-content .artist-name {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--secondary);
             margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s backwards;
+            letter-spacing: 2px;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
             animation: fadeInUp 1s ease 0.5s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.7s backwards;
         }
 
         .cta-button {
@@ -126,29 +173,41 @@
             border-radius: 50px;
             font-weight: bold;
             transition: all 0.3s;
-            animation: fadeInUp 1s ease 0.7s backwards;
             letter-spacing: 1px;
+            font-size: 1rem;
         }
 
         .cta-button:hover {
             background: var(--white);
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.4);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--secondary);
+            color: var(--primary);
         }
 
         section {
-            padding: 5rem 5%;
+            padding: 6rem 5%;
             max-width: 1400px;
             margin: 0 auto;
         }
 
         h2 {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
             text-align: center;
             color: var(--primary);
             position: relative;
-            padding-bottom: 1rem;
+            padding-bottom: 1.5rem;
+            letter-spacing: 2px;
         }
 
         h2::after {
@@ -157,155 +216,249 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: var(--secondary);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary), var(--accent));
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 4rem;
+            font-style: italic;
         }
 
         .about {
-            background: var(--light);
+            background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
         }
 
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 5rem;
             align-items: center;
         }
 
         .about-image {
             width: 100%;
-            height: 500px;
+            height: 550px;
             background: linear-gradient(135deg, var(--accent), var(--secondary));
-            border-radius: 10px;
+            border-radius: 20px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+        }
+
+        .about-image:hover {
+            transform: rotate(0deg) scale(1.02);
         }
 
         .about-image::before {
-            content: '💎';
+            content: '💎✨🎨';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 8rem;
-            opacity: 0.3;
+            font-size: 6rem;
+            opacity: 0.2;
         }
 
         .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
             color: var(--accent);
         }
 
         .about-text p {
             margin-bottom: 1.5rem;
             font-size: 1.1rem;
-            line-height: 1.8;
+            line-height: 1.9;
+            text-align: justify;
         }
 
-        .gallery-header {
-            text-align: center;
-            margin-bottom: 3rem;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        .gallery-header p {
+        .feature-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-item h4 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
             font-size: 1.2rem;
-            color: var(--accent);
-            margin-top: 1rem;
+        }
+
+        .gallery {
+            background: var(--white);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            border: 2px solid var(--secondary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--secondary);
+            color: var(--white);
         }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
         }
 
         .artwork-card {
             background: var(--white);
-            border-radius: 15px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transition: all 0.4s;
             position: relative;
         }
 
         .artwork-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            transform: translateY(-15px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.25);
         }
 
         .artwork-image {
             width: 100%;
-            height: 350px;
-            background-size: cover;
-            background-position: center;
+            height: 400px;
             position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e8e8e8, #d4af37);
+        }
+
+        .artwork-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .artwork-card:hover .artwork-image img {
+            transform: scale(1.1);
         }
 
         .status-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
+            top: 20px;
+            right: 20px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             z-index: 10;
             letter-spacing: 1px;
+            backdrop-filter: blur(10px);
         }
 
         .status-available {
-            background: #2ecc71;
+            background: rgba(46, 204, 113, 0.95);
             color: white;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
         }
 
         .status-sold {
-            background: var(--sold);
+            background: rgba(196, 30, 58, 0.95);
             color: white;
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.4);
+        }
+
+        .gem-indicator {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(212, 175, 55, 0.95);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85rem;
+            backdrop-filter: blur(10px);
         }
 
         .artwork-info {
-            padding: 1.5rem;
+            padding: 2rem;
         }
 
         .artwork-title {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: bold;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             color: var(--primary);
         }
 
         .artwork-details {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: #666;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .artwork-price {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--secondary);
             font-weight: bold;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-note {
+            font-size: 0.9rem;
+            color: #999;
+            font-style: italic;
         }
 
         .artwork-actions {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .btn {
             flex: 1;
-            padding: 0.8rem;
+            padding: 1rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 0.95rem;
+            font-size: 1rem;
             letter-spacing: 0.5px;
+            font-family: inherit;
         }
 
         .btn-inquire {
@@ -316,6 +469,8 @@
         .btn-inquire:hover {
             background: var(--accent);
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212,175,55,0.3);
         }
 
         .btn-bid {
@@ -325,12 +480,25 @@
 
         .btn-bid:hover {
             background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139,115,85,0.3);
         }
 
         .btn-sold {
-            background: #ccc;
-            color: #666;
+            background: #ddd;
+            color: #888;
             cursor: not-allowed;
+        }
+
+        .btn-view {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-view:hover {
+            background: var(--accent);
+            color: white;
         }
 
         .modal {
@@ -340,7 +508,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             z-index: 2000;
             align-items: center;
             justify-content: center;
@@ -353,19 +521,20 @@
 
         .modal-content {
             background: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            max-width: 600px;
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 650px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            animation: slideUp 0.3s ease;
+            animation: slideUp 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
 
         @keyframes slideUp {
             from {
-                transform: translateY(50px);
+                transform: translateY(100px);
                 opacity: 0;
             }
             to {
@@ -376,29 +545,44 @@
 
         .modal-close {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 2rem;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2.5rem;
             cursor: pointer;
             color: #999;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
 
         .modal-close:hover {
             color: var(--primary);
+            background: var(--light);
+            transform: rotate(90deg);
         }
 
         .modal h3 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin-bottom: 1.5rem;
             color: var(--primary);
         }
 
         .modal-artwork-info {
             background: var(--light);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .modal-artwork-info h4 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
         }
 
         .form-group {
@@ -407,75 +591,148 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.7rem;
             font-weight: bold;
             color: var(--accent);
+            font-size: 1rem;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 0.8rem;
+            padding: 1rem;
             border: 2px solid var(--light);
-            border-radius: 8px;
+            border-radius: 10px;
             font-family: inherit;
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
         }
 
         .form-group textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 130px;
         }
 
         .submit-btn {
             width: 100%;
-            padding: 1rem;
+            padding: 1.2rem;
             background: var(--secondary);
             color: var(--primary);
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
             letter-spacing: 1px;
+            font-family: inherit;
         }
 
         .submit-btn:hover {
             background: var(--accent);
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139,115,85,0.3);
+        }
+
+        .contact {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            color: white;
+        }
+
+        .contact h2,
+        .contact h2::after {
+            color: var(--secondary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212,175,55,0.2);
+            transition: all 0.3s;
+        }
+
+        .contact-card:hover {
+            background: rgba(212,175,55,0.1);
+            transform: translateY(-5px);
+        }
+
+        .contact-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .contact-card a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-card a:hover {
+            color: var(--secondary);
         }
 
         footer {
             background: var(--primary);
             color: var(--white);
             text-align: center;
-            padding: 2rem 5%;
+            padding: 3rem 5%;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .social-links a {
             color: var(--white);
-            font-size: 1.5rem;
-            transition: color 0.3s;
+            font-size: 2rem;
+            transition: all 0.3s;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(212,175,55,0.1);
         }
 
         .social-links a:hover {
             color: var(--secondary);
+            background: rgba(212,175,55,0.2);
+            transform: translateY(-5px);
+        }
+
+        .footer-info {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         @keyframes fadeInUp {
@@ -489,37 +746,57 @@
             }
         }
 
-        @media (max-width: 768px) {
+        .success-message {
+            background: var(--available);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @media (max-width: 968px) {
             .menu-toggle {
                 display: flex;
             }
 
             .nav-links {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                max-width: 300px;
                 background: var(--primary);
                 flex-direction: column;
-                padding: 2rem;
-                transform: translateY(-100%);
-                opacity: 0;
-                pointer-events: none;
-                transition: all 0.3s;
+                padding: 5rem 2rem 2rem 2rem;
+                gap: 1.5rem;
+                transition: right 0.3s ease;
             }
 
             .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-                pointer-events: all;
+                right: 0;
             }
 
             .hero-content h1 {
                 font-size: 2.5rem;
             }
 
+            .hero-content .artist-name {
+                font-size: 1.1rem;
+            }
+
             .hero-content p {
-                font-size: 1.2rem;
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
             }
 
             .about-content {
@@ -527,156 +804,164 @@
                 gap: 2rem;
             }
 
-            .about-image {
-                height: 300px;
-            }
-
-            h2 {
-                font-size: 2rem;
-            }
-
-            section {
-                padding: 3rem 5%;
+            .feature-grid {
+                grid-template-columns: 1fr;
             }
 
             .gallery-grid {
                 grid-template-columns: 1fr;
             }
 
+            h2 {
+                font-size: 2rem;
+            }
+
             .modal-content {
-                padding: 1.5rem;
+                padding: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <nav id="navbar">
+    <nav>
         <div class="nav-content">
-            <div class="logo">DREAME ART STUDIO</div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#gallery">Collection</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="menu-toggle" id="menuToggle">
+            <div class="logo">DREAME ART</div>
+            <div class="menu-toggle" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" onclick="closeMenu()">Home</a></li>
+                <li><a href="#about" onclick="closeMenu()">About</a></li>
+                <li><a href="#gallery" onclick="closeMenu()">Gallery</a></li>
+                <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>DREAME ART STUDIO</h1>
-            <p class="artist-name">Kolawole Adedeji Israel</p>
-            <p>Gem-Embellished Portraits • Nature Paintings • Unique Art Investment</p>
-            <a href="#gallery" class="cta-button">View Collection</a>
+            <div class="artist-name">By Kolawole Adedeji Israel</div>
+            <p>Exclusive Gem-Embellished Artworks</p>
+            <div class="cta-buttons">
+                <a href="#gallery" class="cta-button">View Collection</a>
+                <a href="#contact" class="cta-button secondary">Get in Touch</a>
+            </div>
         </div>
     </section>
 
     <section class="about" id="about">
-        <h2>About The Artist</h2>
+        <h2>About the Artist</h2>
+        <p class="section-subtitle">Where Artistry Meets Luxury</p>
         <div class="about-content">
             <div class="about-image"></div>
             <div class="about-text">
                 <h3>Kolawole Adedeji Israel</h3>
-                <p>Welcome to Dreame Art Studio, where innovation meets tradition. As a pioneering Nigerian artist featured on <strong>Saatchi Art</strong>, I create one-of-a-kind artworks using two distinctive styles.</p>
-                <p><strong>💎 Gem-Embellished Portraits:</strong> My signature technique blends traditional painting with precious gems and crystals. I embed diamonds and gemstones to create luminous facial features and stunning visual effects. Each portrait sparkles with life as light dances across the gems—creating an ever-changing masterpiece.</p>
-                <p><strong>🌿 Nature & Environmental Art:</strong> Including works like "Nature Embrace: A Love Letter from Humanity," these pieces celebrate our connection to the environment through oil and acrylic on canvas.</p>
-                <p><strong>Why Collect:</strong> These pieces are extremely rare. The gem technique is labor-intensive, each work takes weeks to complete, and the gems add intrinsic value. You're not just buying art—you're investing in a unique fusion of fine art and precious materials.</p>
+                <p>Kolawole Adedeji Israel is a visionary artist who specializes in creating unique gem-embellished artworks. Each piece is meticulously crafted to blend traditional artistry with luxurious gemstone accents, creating timeless masterpieces.</p>
+                <p>With a passion for detail and an eye for elegance, Kolawole transforms canvas into stunning visual experiences that capture light, emotion, and sophistication.</p>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h4>💎 Gem Embellishment</h4>
+                        <p>Each artwork features carefully selected gemstones</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🎨 Unique Designs</h4>
+                        <p>One-of-a-kind pieces that tell a story</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>✨ Premium Quality</h4>
+                        <p>Only the finest materials and techniques</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🏆 Collector's Items</h4>
+                        <p>Investment-worthy art for discerning collectors</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="gallery" id="gallery">
-        <div class="gallery-header">
-            <h2>Available Artworks</h2>
-            <p>Each piece is an original, one-of-a-kind creation • Contact for inquiries</p>
+        <h2>Art Gallery</h2>
+        <p class="section-subtitle">Discover Our Exclusive Collection</p>
+        
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterGallery('all')">All Artworks</button>
+            <button class="filter-btn" onclick="filterGallery('available')">Available</button>
+            <button class="filter-btn" onclick="filterGallery('sold')">Sold</button>
         </div>
+
         <div class="gallery-grid" id="galleryGrid"></div>
     </section>
 
     <section class="contact" id="contact">
-        <h2>Get In Touch</h2>
-        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
-            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Private viewings by appointment. Experience the artworks in person and discuss commissions, collections, and investment opportunities.</p>
-            <div style="background: var(--light); padding: 2rem; border-radius: 10px;">
-                <p style="margin-bottom: 1rem;"><strong>📍 Location:</strong> Nigeria</p>
-                <p style="margin-bottom: 1rem;"><strong>📧 Email:</strong> <a href="mailto:info@dreameartstudio.com" style="color: var(--accent);">info@dreameartstudio.com</a></p>
-                <p style="margin-bottom: 1rem;"><strong>📱 WhatsApp:</strong> <a href="https://wa.me/2348165771966" target="_blank" style="color: var(--accent);">+234 816 577 1966</a></p>
-                <p style="margin-bottom: 1rem;"><strong>🌐 Featured On:</strong> Saatchi Art</p>
-                <p><strong>⏰ Studio Visits:</strong> By Appointment Only</p>
+        <h2>Get in Touch</h2>
+        <p class="section-subtitle">Let's Create Something Beautiful Together</p>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="icon">📧</div>
+                <h3>Email</h3>
+                <a href="mailto:dreamearts@example.com">dreamearts@example.com</a>
+            </div>
+            <div class="contact-card">
+                <div class="icon">📱</div>
+                <h3>Phone</h3>
+                <a href="tel:+1234567890">+1 (234) 567-890</a>
+            </div>
+            <div class="contact-card">
+                <div class="icon">📍</div>
+                <h3>Location</h3>
+                <p>Lagos, Nigeria</p>
+            </div>
+            <div class="contact-card">
+                <div class="icon">🕒</div>
+                <h3>Hours</h3>
+                <p>Mon-Sat: 10am - 6pm</p>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="social-links">
-            <a href="https://www.instagram.com/kolawole_adedeji_israel/" target="_blank" aria-label="Instagram">📷</a>
-            <a href="https://www.facebook.com/profile.php?id=61580625247601" target="_blank" aria-label="Facebook">📘</a>
-            <a href="https://x.com/dreame_art_1032" target="_blank" aria-label="Twitter">🐦</a>
-            <a href="mailto:info@dreameartstudio.com" aria-label="Email">✉️</a>
+            <a href="#" title="Instagram">📷</a>
+            <a href="#" title="Facebook">📘</a>
+            <a href="#" title="Twitter">🐦</a>
+            <a href="#" title="WhatsApp">💬</a>
         </div>
-        <p>&copy; 2025 Dreame Art Studio | Kolawole Adedeji Israel. All Rights Reserved.</p>
-        <p>Invest in Culture • Own Original Art</p>
+        <div class="footer-info">
+            <p>&copy; 2025 Dreame Art Studio - Kolawole Adedeji Israel. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--secondary);">Crafting Timeless Elegance</p>
+        </div>
     </footer>
 
     <div class="modal" id="inquiryModal">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('inquiryModal')">&times;</span>
+            <span class="modal-close" onclick="closeModal()">&times;</span>
             <h3>Artwork Inquiry</h3>
+            <div id="successMessage" class="success-message">
+                ✓ Your inquiry has been submitted successfully! We'll contact you soon.
+            </div>
             <div class="modal-artwork-info" id="modalArtworkInfo"></div>
-            <form onsubmit="handleInquiry(event)">
+            <form id="inquiryForm" onsubmit="submitInquiry(event)">
                 <div class="form-group">
-                    <label for="inquiryName">Your Name *</label>
-                    <input type="text" id="inquiryName" required>
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="inquiryEmail">Email Address *</label>
-                    <input type="email" id="inquiryEmail" required>
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="inquiryPhone">Phone Number</label>
-                    <input type="tel" id="inquiryPhone">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" required>
                 </div>
                 <div class="form-group">
-                    <label for="inquiryMessage">Message *</label>
-                    <textarea id="inquiryMessage" placeholder="Tell me about your interest in this artwork..." required></textarea>
+                    <label for="message">Your Message</label>
+                    <textarea id="message" placeholder="Tell us about your interest in this artwork..."></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Send Inquiry</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal" id="bidModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('bidModal')">&times;</span>
-            <h3>Place Your Offer</h3>
-            <div class="modal-artwork-info" id="bidArtworkInfo"></div>
-            <form onsubmit="handleBid(event)">
-                <div class="form-group">
-                    <label for="bidName">Your Name *</label>
-                    <input type="text" id="bidName" required>
-                </div>
-                <div class="form-group">
-                    <label for="bidEmail">Email Address *</label>
-                    <input type="email" id="bidEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="bidPhone">Phone Number</label>
-                    <input type="tel" id="bidPhone">
-                </div>
-                <div class="form-group">
-                    <label for="bidAmount">Your Offer (USD) *</label>
-                    <input type="number" id="bidAmount" placeholder="Enter your offer" required min="1">
-                </div>
-                <div class="form-group">
-                    <label for="bidMessage">Additional Message</label>
-                    <textarea id="bidMessage" placeholder="Any additional information..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Submit Offer</button>
+                <button type="submit" class="submit-btn">Submit Inquiry</button>
             </form>
         </div>
     </div>
@@ -685,241 +970,5 @@
         const artworks = [
             {
                 id: 1,
-                title: "The Mockingbird",
-                medium: "Painting",
-                size: "36 x 30 x 2.5 in",
-                year: "2024",
-                price: "$1,050",
-                status: "available",
-                imageUrl: "https://via.placeholder.com/400x500/667eea/ffffff?text=The+Mockingbird"
-            },
-            {
-                id: 2,
-                title: "Back in the Days",
-                medium: "Painting",
-                size: "36 x 30 x 2.5 in",
-                year: "2024",
-                price: "$1,199",
-                status: "available",
-                imageUrl: "https://via.placeholder.com/400x500/f093fb/ffffff?text=Back+in+the+Days"
-            },
-            {
-                id: 3,
-                title: "Self Esteem",
-                medium: "Acrylic on Canvas",
-                size: "36 x 30 in",
-                year: "2024",
-                price: "$2,775",
-                status: "available",
-                imageUrl: "https://via.placeholder.com/400x500/4facfe/ffffff?text=Self+Esteem"
-            },
-            {
-                id: 4,
-                title: "Date Back to Them",
-                medium: "Stencil on Canvas",
-                size: "36 x 30 in",
-                year: "2025",
-                price: "$1,264",
-                status: "available",
-                imageUrl: "https://via.placeholder.com/400x500/43e97b/ffffff?text=Date+Back+to+Them"
-            },
-            {
-                id: 5,
-                title: "The Iron Collector",
-                medium: "Oil on Canvas",
-                size: "36 x 30 in",
-                year: "2024",
-                price: "$1,500",
-                status: "available",
-                imageUrl: "https://via.placeholder.com/400x500/fa709a/ffffff?text=The+Iron+Collector"
-            },
-            {
-                id: 6,
-                title: "Companionship",
-                medium: "Oil on Canvas",
-                size: "36 x 30 in",
-                year: "2024",
-                price: "$537",
-                status: "available",
-                imageUrl: "https://via.placeholder.com/400x500/30cfd0/ffffff?text=Companionship"
-            },
-            {
-                id: 7,
-                title: "Nature Embrace: A Love Letter from Humanity",
-                medium: "Acrylic on Canvas",
-                size: "40 x 30 in",
-                year: "2024",
-                price: "$1,800",
-                status: "available",
-                imageUrl: "https://via.placeholder.com/400x500/a8edea/ffffff?text=Nature+Embrace"
-            },
-            {
-                id: 8,
-                title: "Gem Portrait Series #1",
-                medium: "Mixed Media with Gemstones",
-                size: "24 x 30 in",
-                year: "2024",
-                price: "Contact for Price",
-                status: "available",
-                imageUrl: "https://via.placeholder.com/400x500/fed6e3/ffffff?text=Gem+Portrait+1"
-            },
-            {
-                id: 9,
-                title: "Gem Portrait Series #2",
-                medium: "Mixed Media with Gemstones",
-                size: "24 x 30 in",
-                year: "2024",
-                price: "Contact for Price",
-                status: "available",
-                imageUrl: "https://via.placeholder.com/400x500/c471f5/ffffff?text=Gem+Portrait+2"
-            },
-            {
-                id: 10,
-                title: "Gem Portrait Series #3",
-                medium: "Mixed Media with Gemstones",
-                size: "24 x 30 in",
-                year: "2023",
-                price: "Contact for Price",
-                status: "sold",
-                imageUrl: "https://via.placeholder.com/400x500/ff6b6b/ffffff?text=Gem+Portrait+3"
-            }
-        ];
-
-        let currentArtwork = null;
-
-        function generateGallery() {
-            const grid = document.getElementById('galleryGrid');
-            grid.innerHTML = '';
-            
-            artworks.forEach(artwork => {
-                const card = document.createElement('div');
-                card.className = 'artwork-card';
-                const isSold = artwork.status === 'sold';
-                
-                card.innerHTML = `
-                    <div class="artwork-image" style="background-image: url('${artwork.imageUrl}'); background-size: cover;">
-                        <span class="status-badge ${isSold ? 'status-sold' : 'status-available'}">
-                            ${isSold ? 'SOLD' : 'AVAILABLE'}
-                        </span>
-                    </div>
-                    <div class="artwork-info">
-                        <h3 class="artwork-title">${artwork.title}</h3>
-                        <p class="artwork-details">${artwork.medium} • ${artwork.size}</p>
-                        <p class="artwork-details">Created ${artwork.year}</p>
-                        <p class="artwork-price">${isSold ? 'Sold' : artwork.price}</p>
-                        <div class="artwork-actions">
-                            ${isSold ? 
-                                '<button class="btn btn-sold">Not Available</button>' :
-                                `
-                                <button class="btn btn-inquire" onclick="openInquiry(${artwork.id})">Inquire</button>
-                                <button class="btn btn-bid" onclick="openBid(${artwork.id})">Make Offer</button>
-                                `
-                            }
-                        </div>
-                    </div>
-                `;
-                
-                grid.appendChild(card);
-            });
-        }
-
-        function openInquiry(artworkId) {
-            currentArtwork = artworks.find(a => a.id === artworkId);
-            document.getElementById('modalArtworkInfo').innerHTML = `
-                <h4>${currentArtwork.title}</h4>
-                <p>${currentArtwork.medium} • ${currentArtwork.size}</p>
-                <p><strong>Price:</strong> ${currentArtwork.price}</p>
-            `;
-            document.getElementById('inquiryModal').classList.add('active');
-        }
-
-        function openBid(artworkId) {
-            currentArtwork = artworks.find(a => a.id === artworkId);
-            document.getElementById('bidArtworkInfo').innerHTML = `
-                <h4>${currentArtwork.title}</h4>
-                <p>${currentArtwork.medium} • ${currentArtwork.size}</p>
-                <p><strong>Listed Price:</strong> ${currentArtwork.price}</p>
-            `;
-            document.getElementById('bidModal').classList.add('active');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        function handleInquiry(event) {
-            event.preventDefault();
-            const name = document.getElementById('inquiryName').value;
-            const email = document.getElementById('inquiryEmail').value;
-            const phone = document.getElementById('inquiryPhone').value;
-            const message = document.getElementById('inquiryMessage').value;
-            
-            const whatsappMessage = `Hello! I'm interested in "${currentArtwork.title}"%0A%0AName: ${name}%0AEmail: ${email}%0APhone: ${phone}%0AMessage: ${message}`;
-            
-            window.open(`https://wa.me/2348165771966?text=${whatsappMessage}`, '_blank');
-            
-            closeModal('inquiryModal');
-            event.target.reset();
-        }
-
-        function handleBid(event) {
-            event.preventDefault();
-            const name = document.getElementById('bidName').value;
-            const email = document.getElementById('bidEmail').value;
-            const phone = document.getElementById('bidPhone').value;
-            const amount = document.getElementById('bidAmount').value;
-            const message = document.getElementById('bidMessage').value;
-            
-            const whatsappMessage = `Hello! I'd like to make an offer on "${currentArtwork.title}"%0A%0AName: ${name}%0AEmail: ${email}%0APhone: ${phone}%0AOffer Amount: $${amount}%0AMessage: ${message}`;
-            
-            window.open(`https://wa.me/2348165771966?text=${whatsappMessage}`, '_blank');
-            
-            closeModal('bidModal');
-            event.target.reset();
-        }
-
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
-
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            }
-        });
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal')) {
-                e.target.classList.remove('active');
-            }
-        });
-
-        window.addEventListener('DOMContentLoaded', () => {
-            generateGallery();
-        });
-    </script>
-</body>
-</html>
+                title: "Golden Sunset Dreams",
+                size: "36\"
